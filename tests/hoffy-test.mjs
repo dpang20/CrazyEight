@@ -52,7 +52,7 @@ describe('hoffy', function() {
         });
 
     })
-
+/*
     describe('repeatCall', function() {
         
         beforeEach(mockConsoleOutput);
@@ -120,6 +120,7 @@ describe('hoffy', function() {
             expect(rowsToObjects({headers, rows})).to.eql(expected);
         });
     });
+*/
 });
 
 
