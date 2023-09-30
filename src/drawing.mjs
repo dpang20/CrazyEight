@@ -1,18 +1,77 @@
 // drawing.js
+import {writeFile} from 'fs';
+
 class GenericElement {
-   
+   constructor(name)
+   {
+        this.name = name;
+        this.attributes = {};
+        this.children = [];
+   }
+
+   addAttr(key, value)
+   {
+        this.attributes[key] = value;
+   }
+
+   setAttr(name, value)
+   {
+        this.attributes[name] = value;
+   }
+
+   addAttrs(objs)
+   {
+        this.attributes = { ...this.attributes, ...obj };
+   }
+
+   removeAttrs(arr)
+   {
+        arr.map(attr => delete this.attributes[attr]);
+   }
+
+   addChild(child)
+   {
+        this.children.push(child);
+   }
+
 }
 
-class RootElement {
-
+class RootElement extends GenericElement{
+    constructor() 
+    {
+        super('svg');
+        this.attributes['xmlns'] = 'http://www.w3.org/2000/svg';
+    }
 }
 
 class RectangleElement {
-   
+    constructor(x, y, width, height, fill)
+    {
+        this.name = 'rect';
+        this.attributes = 
+        {
+            'x': x,
+            'y': y,
+            'width': width,
+            'height': height,
+            'fill': fill
+        };
+    }
 }
 
-class TextElement {
-    
+class TextElement 
+{
+    constructor(x, y, fontSize, fill, content)    
+    {
+        this.name = 'text';
+        this.attributes = {
+            'x': x,
+            'y': y,
+            'fontSize': fontSize,
+            'fill': fill,
+            'content': content
+        };
+    }
 }
 
 // the following is used for testing
