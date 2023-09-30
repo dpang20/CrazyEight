@@ -52,7 +52,7 @@ describe('hoffy', function() {
         });
 
     })
-/*
+
     describe('repeatCall', function() {
         
         beforeEach(mockConsoleOutput);
@@ -65,6 +65,7 @@ describe('hoffy', function() {
         });
 
     })
+
     
     describe('limitCallsDecorator', function() {
 
@@ -80,6 +81,7 @@ describe('hoffy', function() {
             console.log(limitedParseInt("423"));
         });
     });
+
 
     describe('limitCallsDecorator', function() {
 
@@ -120,7 +122,7 @@ describe('hoffy', function() {
             expect(rowsToObjects({headers, rows})).to.eql(expected);
         });
     });
-*/
+
 });
 
 

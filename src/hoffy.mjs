@@ -1,4 +1,6 @@
 // hoffy.mjs
+import {readFile} from 'fs';
+
 const getEvenParam = (...args) =>
 {
     return args.filter((_, index) => index % 2 === 0);
@@ -16,26 +18,81 @@ const maybe = (fn) =>
     }
 }
 
-export function filterWith() { 
-    throw new Error("Implement me!");
+const filterWith = (fn) =>
+{
+    return function(arr)
+    {
+        return arr.filter(fn);
+    };
 }
 
-export function repeatCall() { 
-    throw new Error("Implement me!");
+const repeatCall = (fn, n, arg) =>
+{
+    const callFn = (n) =>
+    {
+        if(n <= 0)
+        {
+            return ;
+        }
+        fn(arg);
+        callFn(n-1);
+    }
+
+    callFn(n);
 }
 
-export function limitCallsDecorator() { 
-    throw new Error("Implement me!");
+const limitCallsDecorator = (fn, n) =>
+{
+    let count = 0;
+
+    return function(...args)
+    {
+        if(count < n)
+        {
+            count++;
+            return fn(...args)
+        }
+        return undefined;
+    };
 }
 
-export function rowsToObjects() { 
-    throw new Error("Implement me!");
+
+const myReadFile = (fileName, successFn, errorFn) =>
+{
+    readFile(fileName, 'utf-8', (err, data) =>
+    {
+        if(err)
+        {
+            errorFn(err);
+        }
+        else
+        {
+            successFn(data);
+        }
+    });
 }
 
+const rowsToObjects = (data) =>
+{
+    const {headers, rows} = data;
 
+    return rows.map(row =>
+        {
+            return headers.reduce((acc, header, index) =>
+            {
+                acc[header] = row[index];
+                return acc;
+            }, {});
+        });
+}
 
 export
 {
     getEvenParam,
-    maybe
+    maybe,
+    filterWith,
+    repeatCall,
+    limitCallsDecorator,
+    myReadFile,
+    rowsToObjects
 };
