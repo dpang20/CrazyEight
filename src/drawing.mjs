@@ -21,7 +21,7 @@ class GenericElement {
 
    addAttrs(objs)
    {
-        this.attributes = { ...this.attributes, ...obj };
+        this.attributes = { ...this.attributes, ...objs };
    }
 
    removeAttrs(arr)
@@ -33,10 +33,20 @@ class GenericElement {
    {
         this.children.push(child);
    }
-
+   toString() 
+   {
+        const attrs = Object.keys(this.attributes).map(key => `${key}="${this.attributes[key]}"`).join(' ');
+        const children = this.children.map(child => child.toString()).join('');
+        return `<${this.name} ${attrs}>${children}</${this.name}>`;
+  }
+  write(fileName, cb) 
+  {
+        writeFile(fileName, this.toString(), cb);
+  }
 }
 
-class RootElement extends GenericElement{
+class RootElement extends GenericElement
+{
     constructor() 
     {
         super('svg');
@@ -44,10 +54,11 @@ class RootElement extends GenericElement{
     }
 }
 
-class RectangleElement {
+class RectangleElement extends GenericElement
+{
     constructor(x, y, width, height, fill)
     {
-        this.name = 'rect';
+        super('rect');
         this.attributes = 
         {
             'x': x,
@@ -59,18 +70,23 @@ class RectangleElement {
     }
 }
 
-class TextElement 
+class TextElement extends GenericElement
 {
     constructor(x, y, fontSize, fill, content)    
     {
-        this.name = 'text';
+        super('text');
         this.attributes = {
             'x': x,
             'y': y,
             'fontSize': fontSize,
             'fill': fill,
-            'content': content
         };
+        this.content = content;
+    }
+    toString() 
+    {
+        const attrs = Object.keys(this.attributes).map(key => `${key}="${this.attributes[key]}"`).join(' ');
+        return `<${this.name} ${attrs}>${this.content}</${this.name}>`;
     }
 }
 
